@@ -25,7 +25,7 @@ test.describe("Verify login function", () => {
     };
 
     test.beforeEach("Goto login page", async ({ loginPage }) => {
-        await loginPage.page.goto("/");
+        await loginPage.goto();
     })
 
     test("Verify login success", async ({ loginPage, product }) => {
@@ -42,7 +42,7 @@ test.describe("Verify login function", () => {
         await test.step("Fill info and click login", async () => {
             await loginPage.loginFunction(testData.user[1].username, testData.user[1].password);
         });
-        await test.step("Verify login success", async () => {
+        await test.step("Verify url and error message", async () => {
             await expect(loginPage.page).toHaveURL(process.env.BASE_URL!);
             await expect(loginPage.errorMess).toHaveText(testData.errorLocked);
         })
@@ -51,7 +51,7 @@ test.describe("Verify login function", () => {
         await test.step("Fill info and click login", async () => {
             await loginPage.loginFunction(testData.user[2].username, testData.user[2].password);
         });
-        await test.step("Verify login success", async () => {
+        await test.step("Verify url and error message", async () => {
             await expect(loginPage.page).toHaveURL(process.env.BASE_URL!);
             await expect(loginPage.errorMess).toHaveText(testData.errorWrongInfo);
         })

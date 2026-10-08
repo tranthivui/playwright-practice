@@ -31,4 +31,8 @@ export class LoginPage {
         await this.fillPassword(password);
         await this.clickLoginBtn();
     }
+
+    async goto(){
+        await this.page.goto("/");
+    }
 }
