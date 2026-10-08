@@ -2,7 +2,7 @@ import { Locator, Page } from "@playwright/test";
 
 export class Product {
     page: Page;
-    heading: Locator;
+    readonly heading: Locator;
 
     constructor(page: Page) {
         this.page = page;
