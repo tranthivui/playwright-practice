@@ -3,13 +3,11 @@ import { BasePage } from "./BasePage.page";
 
 export class CartPage extends BasePage {
     readonly url = "/cart.html";
-    readonly page: Page;
     readonly listCartItems: Locator;
 
     constructor(page: Page) {
         super(page);
-        this.page = page;
-        this.listCartItems = this.page.locator("[data-test='inventory-item']")
+        this.listCartItems = page.locator("[data-test='inventory-item']")
     }
 
     getItem(itemName: string): Locator {

@@ -2,16 +2,14 @@ import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage.page";
 
 export class InventoryPage extends BasePage {
-    page: Page;
     readonly url = "/inventory.html";
     readonly heading: Locator;
     readonly listItems: Locator;
 
     constructor(page: Page) {
         super(page);
-        this.page = page;
-        this.heading = this.page.locator("[data-test='title']");
-        this.listItems = this.page.locator("[data-test='inventory-item']")
+        this.heading = page.locator("[data-test='title']");
+        this.listItems = page.locator("[data-test='inventory-item']")
     }
 
     getItem(itemName: string): Locator {

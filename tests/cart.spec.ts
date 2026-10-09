@@ -32,8 +32,8 @@ test.describe("Verify function add and remove", () => {
             await expect(listCartItems).toHaveCount(testData.totalItemsInCart);
             await expect(cartPage.getItem(items.backpack.name)).toBeVisible();
             await expect(cartPage.getItem(items.bikelight.name)).toBeVisible();
-            await expect(await cartPage.getItemPrice(items.backpack.name)).toHaveText(items.backpack.price);
-            await expect(await cartPage.getItemPrice(items.bikelight.name)).toHaveText(items.bikelight.price);
+            await expect(cartPage.getItemPrice(items.backpack.name)).toHaveText(items.backpack.price);
+            await expect(cartPage.getItemPrice(items.bikelight.name)).toHaveText(items.bikelight.price);
         });
     });
     test("Verify remove cart item", async ({ loggedInventoryPage, cartPage }) => {
@@ -52,7 +52,7 @@ test.describe("Verify function add and remove", () => {
         await test.step("Remove item Sauce labs Bike Light", async () => {
             await cartPage.removeItem(items.bikelight.name);
         });
-        await test.step("Verify cart have 1 items", async () => {
+        await test.step("Verify card have 1 items", async () => {
             await expect(cartPage.listCartItems).toHaveCount(testData.totalAfterRemove);
         });
         await test.step("Verify item is Sauce Labs Backpack", async () => {
