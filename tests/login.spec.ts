@@ -3,7 +3,7 @@ import { test } from "../src/fixtures/page.fixture";
 import { users } from "../src/data/users";
 test.describe("Verify login function", () => {
     const testData = {
-        loginUrl:"/",
+        loginUrl: "/",
         productUrl: "/inventory.html",
         heading: "Products",
         errorWrongInfo: "Epic sadface: Username and password do not match any user in this service",
@@ -29,17 +29,17 @@ test.describe("Verify login function", () => {
             await loginPage.loginFunction(users.locked.username, users.locked.password);
         });
         await test.step("Verify url and error message", async () => {
-            await expect(loginPage.page).toHaveURL(url => url.pathname==testData.loginUrl);
+            await expect(loginPage.page).toHaveURL(url => url.pathname == testData.loginUrl);
             await expect(loginPage.errorMess).toHaveText(testData.errorLocked);
         })
     });
-    
+
     test("Login with wrong password", async ({ loginPage }) => {
         await test.step("Fill info and click login", async () => {
             await loginPage.loginFunction(users.wrongPassword.username, users.wrongPassword.password);
         });
         await test.step("Verify url and error message", async () => {
-            await expect(loginPage.page).toHaveURL(url => url.pathname==testData.loginUrl);
+            await expect(loginPage.page).toHaveURL(url => url.pathname == testData.loginUrl);
             await expect(loginPage.errorMess).toHaveText(testData.errorWrongInfo);
         })
     });

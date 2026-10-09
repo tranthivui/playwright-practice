@@ -25,7 +25,7 @@ export const test = base.extend<PageFixture>({
         await page.waitForURL(inventoryPage.url);
         await use(inventoryPage);
     },
-    cartPage: async({loggedInventoryPage,page},use)=>{
+    cartPage: async({page},use)=>{
         const cartpage=new CartPage(page);
         await use(cartpage);
     }
