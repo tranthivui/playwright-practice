@@ -1,4 +1,10 @@
-export function parsePrice(price:string):number {
-    let newPrice=price.replace("$","");
-    return parseFloat(newPrice);
+export function parsePrice(price: string): number {
+
+    const matched = price.match(/\$(\d+(\.\d+)?)/);
+    if (!matched) {
+        throw new Error(`Cannot parse price from: ${price}`);
+    }
+    return parseFloat(matched[1]);
 }
+
+parsePrice("Total: $32.39");

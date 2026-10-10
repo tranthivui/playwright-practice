@@ -1,4 +1,4 @@
-export type Item={
+export type Items={
     name: string,
     price: string;
 };
@@ -6,4 +6,4 @@ export type Item={
 export const items = {
     backpack:{name: "Sauce Labs Backpack",price:"$29.99"},
     bikelight:{name:"Sauce Labs Bike Light",price:"$9.99"}
-} satisfies Record<string, Item>;
+} satisfies Record<string, Items>;

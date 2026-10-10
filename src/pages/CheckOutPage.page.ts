@@ -1,8 +1,9 @@
 import { Locator, Page } from "@playwright/test";
+import { BasePage } from "./BasePage.page";
+import { ItemListPage } from "./ItemListPage.page";
 
-export class CheckOutPage {
+export class CheckOutPage extends BasePage{
     readonly url = "/checkout-step-one.html";
-    readonly page: Page;
     readonly firstname: Locator;
     readonly lastName: Locator;
     readonly postalCode: Locator;
@@ -10,7 +11,7 @@ export class CheckOutPage {
     readonly missingFistNameMess: Locator;
 
     constructor(page: Page) {
-        this.page = page;
+        super(page);
         this.firstname = this.page.getByRole("textbox", { name: "First Name" });
         this.lastName = this.page.getByRole("textbox", { name: "Last Name" });;
         this.postalCode = this.page.getByRole("textbox", { name: "Zip/Postal Code" });

@@ -4,13 +4,9 @@ import { test } from "../src/fixtures/page.fixture"
 import { CheckOutPage } from "../src/pages/CheckOutPage.page"
 import { InventoryPage } from "../src/pages/InventoryPage.page"
 import { parsePrice } from "../src/utils/price"
+import { investors } from "../src/data/investor"
 test.describe("Verify checkout function", async () => {
     const testData = {
-        checkOutInfo: {
-            firstName: "Auto",
-            lastName: "Test",
-            postalCode: "1000000"
-        },
         totalCheckoutItems: 1,
         missingFirstNameMess: "Error: First Name is required"
     }
@@ -28,7 +24,7 @@ test.describe("Verify checkout function", async () => {
             await expect(checkOutPage.page).toHaveURL(checkOutPage.url);
         });
         await test.step("Fill checkout info", async () => {
-            await checkOutPage.fillCheckOutInfo(testData.checkOutInfo.firstName, testData.checkOutInfo.lastName, testData.checkOutInfo.postalCode);
+            await checkOutPage.fillCheckOutInfo(investors.auto.firstName, investors.auto.lastName, investors.auto.postalCode);
         });
         await test.step("Click continute", async () => {
             await checkOutPage.clickContinute();
@@ -48,13 +44,14 @@ test.describe("Verify checkout function", async () => {
             const tax = parsePrice(await overViewPage.tax.innerText());
             const total = parsePrice(await overViewPage.total.innerText());
             const itemTotal = parsePrice(await overViewPage.itemTotal.innerText());
-            expect(itemTotal).toBe(total + tax);
+            expect(total).toBe(itemTotal + tax);
         });
         await test.step("Click finish at step 2", async () => {
             await overViewPage.clickFinishBtn();
         });
         await test.step("Verify go to completed page", async () => {
             await expect(compeletedPage.page).toHaveURL(compeletedPage.url);
+            await expect(compeletedPage.thankOrderMess).toBeVisible();
             await expect(compeletedPage.cartBadge).not.toBeVisible();
         });
     });
@@ -73,12 +70,13 @@ test.describe("Verify checkout function", async () => {
             await expect(checkOutPage.page).toHaveURL(checkOutPage.url);
         });
         await test.step("Fill checkout info with missing first name", async () => {
-            await checkOutPage.fillLastName(testData.checkOutInfo.lastName);
-            await checkOutPage.fillPostalCode(testData.checkOutInfo.postalCode);
+            await checkOutPage.fillLastName(investors.auto.lastName);
+            await checkOutPage.fillPostalCode(investors.auto.postalCode);
             await checkOutPage.clickContinute();
         });
         await test.step("Verify still at checkout page and show error", async () => {
             await expect(checkOutPage.page).toHaveURL(checkOutPage.url);
+            await expect(checkOutPage.missingFistNameMess).toHaveText(testData.missingFirstNameMess);
             await expect(checkOutPage.missingFistNameMess).toHaveText(testData.missingFirstNameMess);
         })
     })

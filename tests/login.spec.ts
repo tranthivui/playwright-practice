@@ -1,6 +1,8 @@
 import { expect } from "@playwright/test";
 import { test } from "../src/fixtures/page.fixture";
 import { users } from "../src/data/users";
+test.use({ storageState: { cookies: [], origins: [] } });
+
 test.describe("Verify login function", () => {
     const testData = {
         loginUrl: "/",
@@ -42,5 +44,5 @@ test.describe("Verify login function", () => {
             await expect(loginPage.page).toHaveURL(url => url.pathname == testData.loginUrl);
             await expect(loginPage.errorMess).toHaveText(testData.errorWrongInfo);
         })
-    });
+    })
 })

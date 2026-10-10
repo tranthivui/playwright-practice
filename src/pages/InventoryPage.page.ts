@@ -1,7 +1,8 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage.page";
+import { ItemListPage } from "./ItemListPage.page";
 
-export class InventoryPage extends BasePage {
+export class InventoryPage extends ItemListPage {
     readonly url = "/inventory.html";
     readonly heading: Locator;
     readonly listItems: Locator;
@@ -10,10 +11,6 @@ export class InventoryPage extends BasePage {
         super(page);
         this.heading = page.locator("[data-test='title']");
         this.listItems = page.locator("[data-test='inventory-item']")
-    }
-
-    getItem(itemName: string): Locator {
-        return this.listItems.filter({ has: this.page.getByText(itemName, { exact: true }) });
     }
 
     getAddToCartBtn(itemName: string): Locator {
