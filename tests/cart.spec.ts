@@ -28,7 +28,7 @@ test.describe("Verify function add and remove", () => {
             await expect(cartPage.page).toHaveURL(cartPage.url);
         });
         await test.step("Verify cart items name and price", async () => {
-            const listCartItems = cartPage.listCartItems;
+            const listCartItems = cartPage.listItems;
             await expect(listCartItems).toHaveCount(testData.totalItemsInCart);
             await expect(cartPage.getItem(items.backpack.name)).toBeVisible();
             await expect(cartPage.getItem(items.bikelight.name)).toBeVisible();
@@ -53,7 +53,7 @@ test.describe("Verify function add and remove", () => {
             await cartPage.removeItem(items.bikelight.name);
         });
         await test.step("Verify cart have 1 items", async () => {
-            await expect(cartPage.listCartItems).toHaveCount(testData.totalAfterRemove);
+            await expect(cartPage.listItems).toHaveCount(testData.totalAfterRemove);
         });
         await test.step("Verify item is Sauce Labs Backpack", async () => {
             await expect(cartPage.getItem(items.backpack.name)).toBeVisible();

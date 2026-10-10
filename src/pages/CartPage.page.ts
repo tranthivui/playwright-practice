@@ -4,17 +4,11 @@ import { ItemListPage } from "./ItemListPage.page";
 
 export class CartPage extends ItemListPage {
     readonly url = "/cart.html";
-    readonly listCartItems: Locator;
     readonly checkOutBtn: Locator;
 
     constructor(page: Page) {
         super(page);
-        this.listCartItems = this.page.locator("[data-test='inventory-item']");
         this.checkOutBtn = this.page.getByRole("button", { name: "Checkout" })
-    }
-
-    getItem(itemName: string): Locator {
-        return this.listCartItems.filter({ has: this.page.getByText(itemName, { exact: true }) });
     }
 
     getRemoveBtn(itemName: string): Locator {

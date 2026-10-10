@@ -5,12 +5,10 @@ import { ItemListPage } from "./ItemListPage.page";
 export class InventoryPage extends ItemListPage {
     readonly url = "/inventory.html";
     readonly heading: Locator;
-    readonly listItems: Locator;
-
+    
     constructor(page: Page) {
         super(page);
         this.heading = page.locator("[data-test='title']");
-        this.listItems = page.locator("[data-test='inventory-item']")
     }
 
     getAddToCartBtn(itemName: string): Locator {

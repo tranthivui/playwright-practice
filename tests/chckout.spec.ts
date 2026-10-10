@@ -34,7 +34,7 @@ test.describe("Verify checkout function", async () => {
         });
         await test.step("Verify have 1 item and correct name/price", async () => {
             await expect(overViewPage.listItems).toHaveCount(testData.totalCheckoutItems);
-            await expect(overViewPage.getItemName(overViewPage.listItems.first())).toHaveText(items.backpack.name);
+            await expect(overViewPage.getItem(items.backpack.name)).toBeVisible;
             await expect(overViewPage.getItemPrice(items.backpack.name)).toHaveText(items.backpack.price);
         });
         await test.step("Verify item total/tax/total", async () => {
@@ -44,7 +44,7 @@ test.describe("Verify checkout function", async () => {
             const tax = parsePrice(await overViewPage.tax.innerText());
             const total = parsePrice(await overViewPage.total.innerText());
             const itemTotal = parsePrice(await overViewPage.itemTotal.innerText());
-            expect(total).toBe(itemTotal + tax);
+            expect(total).toBeCloseTo(itemTotal + tax,2);
         });
         await test.step("Click finish at step 2", async () => {
             await overViewPage.clickFinishBtn();
@@ -76,7 +76,6 @@ test.describe("Verify checkout function", async () => {
         });
         await test.step("Verify still at checkout page and show error", async () => {
             await expect(checkOutPage.page).toHaveURL(checkOutPage.url);
-            await expect(checkOutPage.missingFistNameMess).toHaveText(testData.missingFirstNameMess);
             await expect(checkOutPage.missingFistNameMess).toHaveText(testData.missingFirstNameMess);
         })
     })

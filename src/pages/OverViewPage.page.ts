@@ -5,7 +5,6 @@ import { ItemListPage } from "./ItemListPage.page";
 export class OverViewPage extends ItemListPage{
     readonly url = "checkout-step-two.html";
     readonly finishBtn: Locator;
-    readonly listItems: Locator;
     readonly itemTotal: Locator;
     readonly tax: Locator;
     readonly total: Locator;
@@ -14,7 +13,6 @@ export class OverViewPage extends ItemListPage{
     constructor(page: Page) {
         super(page);
         this.finishBtn = this.page.getByRole("button", { name: "Finish" });
-        this.listItems = this.page.locator("[data-test='inventory-item']");
         this.itemTotal = this.page.locator("[data-test='subtotal-label']");
         this.tax = this.page.locator("[data-test='tax-label']");
         this.total = this.page.locator("[data-test='total-label']");

@@ -6,5 +6,3 @@ export function parsePrice(price: string): number {
     }
     return parseFloat(matched[1]);
 }
-
-parsePrice("Total: $32.39");
