@@ -13,7 +13,7 @@ type PageFixture = {
     cartPage: CartPage,
     checkOutPage: CheckOutPage,
     overViewPage: OverViewPage,
-    compeletedPage: CompletedPage
+    completedPage: CompletedPage
 };
 export const test = base.extend<PageFixture>({
     loginPage: async ({ page }, use) => {
@@ -42,7 +42,7 @@ export const test = base.extend<PageFixture>({
         const overViewPage=new OverViewPage(page);
         await use(overViewPage);
     },
-    compeletedPage: async({page},use)=>{
+    completedPage: async({page},use)=>{
         const compeletedPage=new CompletedPage(page);
         await use(compeletedPage);
     }

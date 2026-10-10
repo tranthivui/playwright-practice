@@ -5,12 +5,12 @@ import { CheckOutPage } from "../src/pages/CheckOutPage.page"
 import { InventoryPage } from "../src/pages/InventoryPage.page"
 import { parsePrice } from "../src/utils/price"
 import { investors } from "../src/data/investor"
-test.describe("Verify checkout function", async () => {
+test.describe("Verify checkout function", () => {
     const testData = {
         totalCheckoutItems: 1,
         missingFirstNameMess: "Error: First Name is required"
     }
-    test("Verify checkout step 1", async ({ loggedInventoryPage, checkOutPage, cartPage, overViewPage, compeletedPage }) => {
+    test("Verify checkout step 1", async ({ loggedInventoryPage, checkOutPage, cartPage, overViewPage, completedPage }) => {
         await test.step("Add procduct", async () => {
             await loggedInventoryPage.clickAddToCart(items.backpack.name);
         });
@@ -34,7 +34,7 @@ test.describe("Verify checkout function", async () => {
         });
         await test.step("Verify have 1 item and correct name/price", async () => {
             await expect(overViewPage.listItems).toHaveCount(testData.totalCheckoutItems);
-            await expect(overViewPage.getItem(items.backpack.name)).toBeVisible;
+            await expect(overViewPage.getItem(items.backpack.name)).toBeVisible();
             await expect(overViewPage.getItemPrice(items.backpack.name)).toHaveText(items.backpack.price);
         });
         await test.step("Verify item total/tax/total", async () => {
@@ -50,13 +50,13 @@ test.describe("Verify checkout function", async () => {
             await overViewPage.clickFinishBtn();
         });
         await test.step("Verify go to completed page", async () => {
-            await expect(compeletedPage.page).toHaveURL(compeletedPage.url);
-            await expect(compeletedPage.thankOrderMess).toBeVisible();
-            await expect(compeletedPage.cartBadge).not.toBeVisible();
+            await expect(completedPage.page).toHaveURL(completedPage.url);
+            await expect(completedPage.thankOrderMess).toBeVisible();
+            await expect(completedPage.cartBadge).not.toBeVisible();
         });
     });
 
-    test("Verify missing first name", async ({ loggedInventoryPage, checkOutPage, cartPage, overViewPage, compeletedPage }) => {
+    test("Verify missing first name", async ({ loggedInventoryPage, checkOutPage, cartPage, overViewPage }) => {
         await test.step("Add procduct", async () => {
             await loggedInventoryPage.clickAddToCart(items.backpack.name);
         });

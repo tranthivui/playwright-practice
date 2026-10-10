@@ -21,9 +21,4 @@ export class OverViewPage extends ItemListPage{
     async clickFinishBtn() {
         await this.finishBtn.click();
     }
-
-    getItemName(item: Locator): Locator {
-        return item.locator("[data-test='inventory-item-name']")
-    }
-
 }
