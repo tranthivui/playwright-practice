@@ -52,13 +52,13 @@ test.describe("Verify function add and remove", () => {
         await test.step("Remove item Sauce labs Bike Light", async () => {
             await cartPage.removeItem(items.bikelight.name);
         });
-        await test.step("Verify card have 1 items", async () => {
+        await test.step("Verify cart have 1 items", async () => {
             await expect(cartPage.listCartItems).toHaveCount(testData.totalAfterRemove);
         });
         await test.step("Verify item is Sauce Labs Backpack", async () => {
             await expect(cartPage.getItem(items.backpack.name)).toBeVisible();
         });
-        await test.step("Verify card badge show 1", async () => {
+        await test.step("Verify cart badge show 1", async () => {
             await expect(cartPage.cartBadge).toHaveText(testData.totalAfterRemove.toString());
         })
     })

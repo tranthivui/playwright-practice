@@ -4,10 +4,12 @@ import { BasePage } from "./BasePage.page";
 export class CartPage extends BasePage {
     readonly url = "/cart.html";
     readonly listCartItems: Locator;
+    readonly checkOutBtn: Locator;
 
     constructor(page: Page) {
         super(page);
-        this.listCartItems = page.locator("[data-test='inventory-item']")
+        this.listCartItems = page.locator("[data-test='inventory-item']");
+        this.checkOutBtn = this.page.getByRole("button", { name: "Checkout" })
     }
 
     getItem(itemName: string): Locator {
@@ -26,5 +28,9 @@ export class CartPage extends BasePage {
 
     async removeItem(itemName: string) {
         await this.getRemoveBtn(itemName).click();
+    }
+
+    async clickCheckOut() {
+        await this.checkOutBtn.click();
     }
 }

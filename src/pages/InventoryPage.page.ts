@@ -33,4 +33,8 @@ export class InventoryPage extends BasePage {
     async clickAddToCart(itemName: string) {
         await this.getAddToCartBtn(itemName).click();
     }
+
+    async goto() {
+        await this.page.goto(this.url);
+    }
 }
