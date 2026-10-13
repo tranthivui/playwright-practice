@@ -7,6 +7,7 @@ test.describe("Verify function add and remove", () => {
     const testData = {
         totalItemsInCart: 2,
         totalAfterRemove: 1,
+        badgeCount: 1,
         sortType: "Price (high to low)"
     };
     test("Verify add item to cart", async ({ loggedInventoryPage, cartPage }) => {
@@ -70,7 +71,7 @@ test.describe("Verify function add and remove", () => {
             await test.step("Choose sort option", async () => {
                 await loggedInventoryPage.selectSortOption(sortOption.option);
             });
-            const expectedList = allItems.map(Item => Item[sortOption.sortBy]);
+            const expectedList = allItems.map(item => item[sortOption.sortBy]);
             expectedList.sort((a, b) => sortOption.sortBy === 'price'
                 ? parsePrice(a) - parsePrice(b)
                 : a.localeCompare(b));
@@ -97,7 +98,7 @@ test.describe("Verify function add and remove", () => {
             await loggedInventoryPage.clickAddToCart(items.bikelight.name);
         });
         await test.step("Verify cart badge is 1", async () => {
-            await expect(cartPage.cartBadge).toHaveText(testData.totalAfterRemove.toString());
+            await expect(loggedInventoryPage.cartBadge).toHaveText(testData.badgeCount.toString());
         });
         await test.step("Verify item show button remove", async () => {
             await expect(loggedInventoryPage.getRemoveBtn(items.bikelight.name)).toBeVisible();
