@@ -82,27 +82,25 @@ test.describe("Verify function add and remove", () => {
                     ? loggedInventoryPage.listItemNames
                     : loggedInventoryPage.listItemPrices;
                 await expect(actualListLocator).toHaveText(expectedList);
-            })
+            });
+            await test.step("Verify select option show sortOption",async()=>{
+                await expect(loggedInventoryPage.orderTypeActive).toHaveText(sortOption.option);
+            });
         })
     };
 
     test("Add item to cart after order", async ({ loggedInventoryPage, cartPage }) => {
         await test.step("Sort items", async () => {
-            for (const sortOption of sortOptions) {
-                if (sortOption.option === testData.sortType) {
-                    await loggedInventoryPage.selectSortOption(sortOption.option);
-                }
-                break;
-            }
+            await loggedInventoryPage.selectSortOption(testData.sortType);
         });
         await test.step("Add item to cart", async () => {
-            await loggedInventoryPage.clickAddToCart(items.backpack.name);
+            await loggedInventoryPage.clickAddToCart(items.bikelight.name);
         });
         await test.step("Verify cart badge is 1", async () => {
             await expect(cartPage.cartBadge).toHaveText(testData.totalAfterRemove.toString());
         });
         await test.step("Verify item show button remove", async () => {
-            await expect(loggedInventoryPage.getRemoveBtn(items.backpack.name)).toBeVisible();
+            await expect(loggedInventoryPage.getRemoveBtn(items.bikelight.name)).toBeVisible();
         })
     })
 })

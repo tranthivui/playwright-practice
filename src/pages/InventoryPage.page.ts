@@ -6,11 +6,13 @@ export class InventoryPage extends ItemListPage {
     readonly url = "/inventory.html";
     readonly heading: Locator;
     readonly orderType: Locator;
+    readonly orderTypeActive: Locator;
     
     constructor(page: Page) {
         super(page);
         this.heading = page.locator("[data-test='title']");
         this.orderType=this.page.getByRole("combobox",{name:"Sort products"});
+        this.orderTypeActive=this.page.locator("[data-test='active-option']");
     }
 
     getAddToCartBtn(itemName: string): Locator {
