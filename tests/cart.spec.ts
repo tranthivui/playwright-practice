@@ -1,11 +1,13 @@
 import { test } from "../src/fixtures/page.fixture";
-import { items } from "../src/data/items";
+import { allItems, Item, items, sortOptions } from "../src/data/items";
 import { expect } from "@playwright/test";
+import { parsePrice } from "../src/utils/price";
 
 test.describe("Verify function add and remove", () => {
     const testData = {
         totalItemsInCart: 2,
-        totalAfterRemove: 1
+        totalAfterRemove: 1,
+        sortType: "Price (high to low)"
     };
     test("Verify add item to cart", async ({ loggedInventoryPage, cartPage }) => {
         await test.step("Add item backpack to cart", async () => {
@@ -60,6 +62,47 @@ test.describe("Verify function add and remove", () => {
         });
         await test.step("Verify cart badge show 1", async () => {
             await expect(cartPage.cartBadge).toHaveText(testData.totalAfterRemove.toString());
+        })
+    });
+
+    for (const sortOption of sortOptions) {
+        test(`Sort by: ${sortOption.option}`, async ({ loggedInventoryPage }) => {
+            await test.step("Choose sort option", async () => {
+                await loggedInventoryPage.selectSortOption(sortOption.option);
+            });
+            const expectedList = allItems.map(Item => Item[sortOption.sortBy]);
+            expectedList.sort((a, b) => sortOption.sortBy === 'price'
+                ? parsePrice(a) - parsePrice(b)
+                : a.localeCompare(b));
+            if (sortOption.direction === 'desc') {
+                expectedList.reverse();
+            }
+            await test.step("Verify sort correct", async () => {
+                const actualListLocator = sortOption.sortBy === 'name'
+                    ? loggedInventoryPage.listItemNames
+                    : loggedInventoryPage.listItemPrices;
+                await expect(actualListLocator).toHaveText(expectedList);
+            })
+        })
+    };
+
+    test("Add item to cart after order", async ({ loggedInventoryPage, cartPage }) => {
+        await test.step("Sort items", async () => {
+            for (const sortOption of sortOptions) {
+                if (sortOption.option === testData.sortType) {
+                    await loggedInventoryPage.selectSortOption(sortOption.option);
+                }
+                break;
+            }
+        });
+        await test.step("Add item to cart", async () => {
+            await loggedInventoryPage.clickAddToCart(items.backpack.name);
+        });
+        await test.step("Verify cart badge is 1", async () => {
+            await expect(cartPage.cartBadge).toHaveText(testData.totalAfterRemove.toString());
+        });
+        await test.step("Verify item show button remove", async () => {
+            await expect(loggedInventoryPage.getRemoveBtn(items.backpack.name)).toBeVisible();
         })
     })
 })

@@ -4,7 +4,7 @@ import { test } from "../src/fixtures/page.fixture"
 import { CheckOutPage } from "../src/pages/CheckOutPage.page"
 import { InventoryPage } from "../src/pages/InventoryPage.page"
 import { parsePrice } from "../src/utils/price"
-import { investors } from "../src/data/investor"
+import { customers } from "../src/data/customers"
 test.describe("Verify checkout function", () => {
     const testData = {
         totalCheckoutItems: 1,
@@ -24,7 +24,7 @@ test.describe("Verify checkout function", () => {
             await expect(checkOutPage.page).toHaveURL(checkOutPage.url);
         });
         await test.step("Fill checkout info", async () => {
-            await checkOutPage.fillCheckOutInfo(investors.auto.firstName, investors.auto.lastName, investors.auto.postalCode);
+            await checkOutPage.fillCheckOutInfo(customers.customer.firstName, customers.customer.lastName, customers.customer.postalCode);
         });
         await test.step("Click continute", async () => {
             await checkOutPage.clickContinute();
@@ -56,7 +56,7 @@ test.describe("Verify checkout function", () => {
         });
     });
 
-    test("Verify missing first name", async ({ loggedInventoryPage, checkOutPage, cartPage, overViewPage }) => {
+    test("Verify missing first name", async ({ loggedInventoryPage, checkOutPage, cartPage }) => {
         await test.step("Add procduct", async () => {
             await loggedInventoryPage.clickAddToCart(items.backpack.name);
         });
@@ -70,8 +70,8 @@ test.describe("Verify checkout function", () => {
             await expect(checkOutPage.page).toHaveURL(checkOutPage.url);
         });
         await test.step("Fill checkout info with missing first name", async () => {
-            await checkOutPage.fillLastName(investors.auto.lastName);
-            await checkOutPage.fillPostalCode(investors.auto.postalCode);
+            await checkOutPage.fillLastName(customers.customer.lastName);
+            await checkOutPage.fillPostalCode(customers.customer.postalCode);
             await checkOutPage.clickContinute();
         });
         await test.step("Verify still at checkout page and show error", async () => {

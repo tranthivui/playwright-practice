@@ -5,10 +5,12 @@ import { ItemListPage } from "./ItemListPage.page";
 export class InventoryPage extends ItemListPage {
     readonly url = "/inventory.html";
     readonly heading: Locator;
+    readonly orderType: Locator;
     
     constructor(page: Page) {
         super(page);
         this.heading = page.locator("[data-test='title']");
+        this.orderType=this.page.getByRole("combobox",{name:"Sort products"});
     }
 
     getAddToCartBtn(itemName: string): Locator {
@@ -31,5 +33,9 @@ export class InventoryPage extends ItemListPage {
 
     async goto() {
         await this.page.goto(this.url);
+    }
+
+    async selectSortOption(sortType:string){
+        await this.orderType.selectOption(sortType);
     }
 }

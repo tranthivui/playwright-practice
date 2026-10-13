@@ -7,3 +7,5 @@ export const users = {
     locked: { username: "locked_out_user", password: "secret_sauce" },
     wrongPassword: { username: "standard_user", password: "wrong_password" }
 } satisfies Record<string, User>;
+
+
