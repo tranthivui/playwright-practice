@@ -25,12 +25,12 @@ test.describe("Verify login function", () => {
     });
 
     for (const user of invalidLoginCase) {
-        test(`Login with user: ${user.case}`, async ({ loginPage, inventoryPage }) => {
+        test(`Login with user: ${user.case}`, async ({ loginPage }) => {
             await test.step("Fill login info", async () => {
-                await loginPage.loginFunction(user.user_name, user.password);
+                await loginPage.loginFunction(user.username, user.password);
             });
             await test.step("Verify", async () => {
-                await expect(loginPage.page).toHaveURL(url => url.pathname == testData.loginUrl);
+                await expect(loginPage.page).toHaveURL(url => url.pathname === testData.loginUrl);
                 await expect(loginPage.errorMess).toHaveText(user.errorMess);
             })
         })
