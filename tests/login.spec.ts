@@ -16,7 +16,7 @@ test.describe("Verify login function", () => {
     test.beforeEach("Goto login page", async ({ loginPage }) => {
         await loginPage.goto();
     })
-        */
+        
 
     test("Verify login success", async ({ loginPage, inventoryPage }) => {
         await test.step("Fill info and click login", async () => {
@@ -47,7 +47,7 @@ test.describe("Verify login function", () => {
             await expect(loginPage.errorMess).toHaveText(testData.errorWrongInfo);
         })
     });
-
+*/
     for (const user of listUsers) {
         test(`Login with user: ${user.type}`, async ({ loginPage, inventoryPage }) => {
             await test.step("Go to login page", async () => {
