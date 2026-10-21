@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import dotenv from "dotenv"
-import { AUTH_FILE, BASE_URL } from './src/config/paths';
+import { AUTH_FILE, DEMOQA_URL } from './src/config/paths';
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -55,7 +55,7 @@ export default defineConfig({
       testMatch: /demoqa\/.*\.spec\.ts/,
       use:{
         ...devices['Desktop Chrome'],
-        baseURL: BASE_URL,
+        baseURL: DEMOQA_URL,
       }
     }
 

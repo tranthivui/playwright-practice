@@ -1,12 +1,11 @@
-import { expect } from '@playwright/test';
-import { test } from '@playwright/test'
+import { expect,test } from '@playwright/test';
 import { GET_BOOK } from '../../src/config/paths';
 import { Book, GetBookRes } from '../../src/types/book';
-import { books } from "../../src/data/books";
+import { mockBooksRes } from "../../src/data/books";
 import { BookPage } from '../../src/pages/BookPage.page';
 import { noBook } from '../../src/data/nobook'
 
-test('API get list book', async ({ request }) => {
+test('TC005-01: API get list book', async ({ request }) => {
   const bookTitle = 'Git Pocket Guide';
   const getBooksRes = await request.get(GET_BOOK);
   expect(getBooksRes.status()).toBe(200);
@@ -24,9 +23,9 @@ test('API get list book', async ({ request }) => {
   expect(listBooks.map(b => b.title)).toContain(bookTitle);
 });
 
-test("Verify UI and API", async ({ page, request }) => {
+test("TC005-02: Verify UI and API", async ({ page, request }) => {
   const getBookRes = await request.get(GET_BOOK);
-  expect(getBookRes.status()).toEqual(200);
+  expect(getBookRes.status()).toBe(200);
   const getBookData: GetBookRes = await getBookRes.json();
   const listBooks: Book[] = getBookData.books;
   const bookTitleAPI = listBooks.map(book => book.title);
@@ -35,19 +34,19 @@ test("Verify UI and API", async ({ page, request }) => {
   await expect(bookPage.listBook).toHaveText(bookTitleAPI);
 });
 
-test("Mock data: Fake book", async ({ page }) => {
+test("TC005-03: Mock data - Fake book", async ({ page }) => {
   const bookPage = new BookPage(page);
   const responsePromise = bookPage.page.waitForResponse(GET_BOOK);
   await bookPage.page.route(GET_BOOK, async route => {
-    await route.fulfill({ status: 200, json: books });
+    await route.fulfill({ status: 200, json: mockBooksRes });
   });
   await bookPage.goto();
   await responsePromise;
-  await expect(bookPage.listBook).toHaveText(books.books.map(book => book.title));
+  await expect(bookPage.listBook).toHaveText(mockBooksRes.books.map(book => book.title));
 });
 
 
-test("Mock data: Not have book", async ({ page }) => {
+test("TC005-04: Mock data - Not have book", async ({ page }) => {
   const textNoData = "Page 1 of 0";
   const bookPage = new BookPage(page);
   const responsePromise = bookPage.page.waitForResponse(GET_BOOK);

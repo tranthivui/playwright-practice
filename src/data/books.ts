@@ -1,6 +1,6 @@
 import { GetBookRes } from "../types/book";
 
-export const books={
+export const mockBooksRes={
     "books": [
         {
             "isbn": "9781449325862",
