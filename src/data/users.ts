@@ -9,7 +9,7 @@ type InvalidLoginCase={
     errorMess: string
 };
 
-export const invalidLoginCase = [
+export const invalidLoginCases = [
     {
         case: "locked user",
         username: "locked_out_user",

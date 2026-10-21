@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 import { test } from "../src/fixtures/page.fixture";
-import { invalidLoginCase, validUsers } from "../src/data/users";
+import { invalidLoginCases, validUsers } from "../src/data/users";
 test.use({ storageState: { cookies: [], origins: [] } });
 
 test.describe("Verify login function", () => {
@@ -24,7 +24,7 @@ test.describe("Verify login function", () => {
         })
     });
 
-    for (const user of invalidLoginCase) {
+    for (const user of invalidLoginCases) {
         test(`Login with user: ${user.case}`, async ({ loginPage }) => {
             await test.step("Fill login info", async () => {
                 await loginPage.loginFunction(user.username, user.password);
